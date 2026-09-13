@@ -1,23 +1,23 @@
 <div align="center" style="text-align: center;">
 
-![Logo](https://nixphp.github.io/docs/assets/nixphp-logo-small-square.png)
+![NAF](assets/naf-logo-small-square.png)
 
-[![NixPHP View Plugin](https://github.com/nixphp/view/actions/workflows/php.yml/badge.svg)](https://github.com/nixphp/view/actions/workflows/php.yml)
+[![NAF View Plugin](https://github.com/nafphp/view/actions/workflows/php.yml/badge.svg)](https://github.com/nafphp/view/actions/workflows/php.yml)
 
 </div>
 
-[← Back to NixPHP](https://github.com/nixphp/framework)
+[← Back to NAF](https://github.com/nafphp/framework)
 
 ---
 
-# nixphp/view
+# naf/view
 
 > **A lightweight, native PHP templating system — with layout inheritance and block support.**
 
-This plugin brings a clean, minimal templating system to your NixPHP application.
+This plugin brings a clean, minimal templating system to your NAF application.
 It lets you define base layouts, use content blocks, and safely output user data — all with pure PHP.
 
-> 🧩 Part of the official NixPHP plugin collection.
+> 🧩 Part of the official NAF plugin collection.
 > Install it when you need structured HTML rendering — without external engines like Twig or Blade.
 
 ---
@@ -35,7 +35,7 @@ It lets you define base layouts, use content blocks, and safely output user data
 ## 📥 Installation
 
 ```bash
-composer require nixphp/view
+composer require naf/view
 ```
 
 The plugin auto-registers itself and adds the `view()`, `render()`, `assets()` and `s()` helpers globally.
@@ -211,7 +211,7 @@ The entries are resolved relative to `BASE_PATH` when they are not absolute path
 
 ## ✅ Requirements
 
-* `nixphp/framework` >= 1.0
+* `naf/framework` >= 1.0
 
 ---
 

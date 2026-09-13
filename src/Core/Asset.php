@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\View\Core;
+namespace Naf\View\Core;
 
-use function NixPHP\View\s;
+use function Naf\View\s;
 
 class Asset
 {

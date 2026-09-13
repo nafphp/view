@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\View\Core;
+namespace Naf\View\Core;
 
-use function NixPHP\app;
-use function NixPHP\config;
-use function NixPHP\guard;
-use function NixPHP\plugin;
+use function Naf\app;
+use function Naf\config;
+use function Naf\guard;
+use function Naf\plugin;
 
 class View
 {

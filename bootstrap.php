@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use NixPHP\View\Core\Asset;
-use function NixPHP\app;
+use Naf\View\Core\Asset;
+use function Naf\app;
 
 app()->container()->set(Asset::class, function() {
     return new Asset();

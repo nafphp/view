@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use NixPHP\View\Core\Asset;
-use Tests\NixPHPTestCase;
+use Naf\View\Core\Asset;
+use Tests\NafTestCase;
 
-class AssetTest extends NixPHPTestCase
+class AssetTest extends NafTestCase
 {
 
     public function testAssetInternals()

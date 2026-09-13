@@ -1,9 +1,9 @@
 {
-  "name": "nixphp/view",
-  "description": "NixPHP View Plugin with simple templating.",
+  "name": "naf/view",
+  "description": "NAF View Plugin with simple templating.",
   "minimum-stability": "stable",
   "license": "MIT",
-  "type": "nixphp-plugin",
+  "type": "naf-plugin",
   "authors": [
     {
       "name": "Flo Knapp",
@@ -12,7 +12,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "NixPHP\\View\\": "src/"
+      "Naf\\View\\": "src/"
     }
   },
   "autoload-dev": {
@@ -23,7 +23,7 @@
   },
   "require": {
     "php": ">=8.3",
-    "nixphp/framework": "^0.1.0"
+    "naf/framework": "^0.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^12.1",

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use NixPHP\Core\Config;
-use NixPHP\View\Core\View;
-use Tests\NixPHPTestCase;
-use function NixPHP\app;
-use function NixPHP\guard;
-use function NixPHP\View\view;
+use Naf\Core\Config;
+use Naf\View\Core\View;
+use Tests\NafTestCase;
+use function Naf\app;
+use function Naf\guard;
+use function Naf\View\view;
 
-class ViewTest extends NixPHPTestCase
+class ViewTest extends NafTestCase
 {
 
     public function testViewCreation()

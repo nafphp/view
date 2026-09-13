@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function NixPHP\guard;
+use function Naf\guard;
 
 if (!defined('BASE_PATH')) {
     define('BASE_PATH', __DIR__ . '/Fixtures');

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\View;
+namespace Naf\View;
 
-use NixPHP\View\Core\Asset;
-use NixPHP\View\Core\View;
+use Naf\View\Core\Asset;
+use Naf\View\Core\View;
 use Psr\Http\Message\ResponseInterface;
-use function NixPHP\app;
-use function NixPHP\guard;
-use function NixPHP\response;
+use function Naf\app;
+use function Naf\guard;
+use function Naf\response;
 
 function s(string|array|null $value): string|array|null
 {
