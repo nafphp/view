@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use Exception;
+use InvalidArgumentException;
 use Naf\Core\Config;
 use Naf\View\Core\View;
+use RuntimeException;
 use Tests\NafTestCase;
+
 use function Naf\app;
 use function Naf\guard;
 use function Naf\View\view;
 
 class ViewTest extends NafTestCase
 {
-
     public function testViewCreation()
     {
         $view = new View();
@@ -23,7 +26,7 @@ class ViewTest extends NafTestCase
 
     public function testTemplateNotFoundException()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $view = new View();
         $view->setTemplate('test_not_exists');
     }
@@ -78,7 +81,7 @@ class ViewTest extends NafTestCase
 
     public function testMissingOpenedBlockInView()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $view = new View();
         $view->setTemplate('test_missing_block');
         $view->render();
@@ -86,9 +89,9 @@ class ViewTest extends NafTestCase
 
     public function testMaliciousTemplatePath()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $view = new View();
-        guard()->register('safePath', fn($path) => throw new \InvalidArgumentException('test'));
+        guard()->register('safePath', fn($path) => throw new InvalidArgumentException('test'));
         $view->setTemplate('../../../../etc/passwd');
         $view->render();
     }
@@ -101,7 +104,7 @@ class ViewTest extends NafTestCase
 
     private function withViewConfig(array $settings, callable $callback): void
     {
-        $container = app()->container();
+        $container      = app()->container();
         $originalConfig = $container->get(Config::class);
 
         $container->reset(Config::class);
@@ -114,5 +117,4 @@ class ViewTest extends NafTestCase
             $container->set(Config::class, $originalConfig);
         }
     }
-
 }

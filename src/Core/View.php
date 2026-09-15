@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Naf\View\Core;
 
+use Exception;
+use RuntimeException;
+
 use function Naf\app;
 use function Naf\config;
 use function Naf\guard;
@@ -11,9 +14,9 @@ use function Naf\plugin;
 
 class View
 {
-    private View|null $layout = null;
-    private array $variables = [];
-    private string|null $template = null;
+    private ?View $layout                  = null;
+    private array $variables               = [];
+    private ?string $template              = null;
     private const array DEFAULT_VIEW_PATHS = ['views', 'app/views'];
 
     /**
@@ -25,6 +28,7 @@ class View
     {
         $this->layout = new View();
         $this->layout->setTemplate($template);
+
         return $this;
     }
 
@@ -35,8 +39,9 @@ class View
      */
     public function setTemplate(string $template): View
     {
-        $template = $this->buildTemplatePath($template);
+        $template       = $this->buildTemplatePath($template);
         $this->template = $template;
+
         return $this;
     }
 
@@ -49,6 +54,7 @@ class View
     public function setVariable(string $key, mixed $value): View
     {
         $this->variables[$key] = $value;
+
         return $this;
     }
 
@@ -60,6 +66,7 @@ class View
     public function setVariables(array $variables): View
     {
         $this->variables = $variables;
+
         return $this;
     }
 
@@ -95,13 +102,13 @@ class View
      * @param string $name
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function endblock(string $name): void
     {
         if (!isset($this->variables[$name])) {
             ob_end_clean();
-            throw new \Exception("Block $name was not opened. ");
+            throw new Exception("Block $name was not opened. ");
         }
         $this->variables[$name] = ob_get_clean();
     }
@@ -134,10 +141,12 @@ class View
 
         foreach ($paths as $path) {
             $fullPath = sprintf('%s/%s.phtml', rtrim($path, '/'), str_replace('.', '/', $templateName));
-            if (is_file($fullPath)) return $fullPath;
+            if (is_file($fullPath)) {
+                return $fullPath;
+            }
         }
 
-        throw new \RuntimeException("View $templateName not found in any known paths.");
+        throw new RuntimeException("View $templateName not found in any known paths.");
     }
 
     private function getConfiguredViewPaths(): array
@@ -167,7 +176,7 @@ class View
         return array_values(array_unique($resolved));
     }
 
-    private function resolveViewPath(string $path, string|null $basePath): ?string
+    private function resolveViewPath(string $path, ?string $basePath): ?string
     {
         $path = trim($path);
         if ($path === '') {
@@ -187,9 +196,8 @@ class View
 
     private function isAbsolutePath(string $path): bool
     {
-        return str_starts_with($path, '/') ||
-            str_starts_with($path, '\\\\') ||
-            preg_match('/^[A-Za-z]:[\\/\\\\]/', $path) === 1;
+        return str_starts_with($path, '/')
+            || str_starts_with($path, '\\\\')
+            || preg_match('/^[A-Za-z]:[\\/\\\\]/', $path) === 1;
     }
-
 }

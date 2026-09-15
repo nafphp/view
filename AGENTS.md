@@ -59,3 +59,7 @@ for rendering, overrides, escaping, path rejection, blocks and assets. Check vis
 an actual host when changing template behavior. No `analyse` script is declared.
 
 User docs: [Views and assets](https://nafphp.github.io/docs/views/).
+
+Follow the shared [PHP code style](https://github.com/nafphp/docs/blob/main/CODE_STYLE.md)
+and `.php-cs-fixer.dist.php`. Run `composer style:check`; `composer style:fix` applies the rules.
+Keep logical steps and local names readable, preserving public signatures and template output.

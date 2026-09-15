@@ -8,15 +8,15 @@ use function Naf\View\s;
 
 class Asset
 {
-    private const string TAG_CSS = '<link rel="stylesheet" href="%s">';
-    private const string TAG_JS = '<script src="%s"></script>';
+    private const string TAG_CSS       = '<link rel="stylesheet" href="%s">';
+    private const string TAG_JS        = '<script src="%s"></script>';
     private const string TAG_JS_MODULE = '<script type="module" src="%s"></script>';
 
     protected array $assets = [
         'css' => [],
-        'js' => [
+        'js'  => [
             'classic' => [],
-            'module' => []
+            'module'  => [],
         ],
     ];
 
