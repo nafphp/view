@@ -9,7 +9,6 @@ use Tests\NafTestCase;
 
 class AssetTest extends NafTestCase
 {
-
     public function testAssetInternals()
     {
         $asset = new Asset();
@@ -32,5 +31,4 @@ class AssetTest extends NafTestCase
         $asset->add('test.js');
         $this->assertSame('<script src="test.js"></script>', $asset->render('js'));
     }
-
 }

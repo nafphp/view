@@ -7,6 +7,7 @@ namespace Naf\View;
 use Naf\View\Core\Asset;
 use Naf\View\Core\View;
 use Psr\Http\Message\ResponseInterface;
+
 use function Naf\app;
 use function Naf\guard;
 use function Naf\response;
