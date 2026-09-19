@@ -14,10 +14,15 @@ use function Naf\plugin;
 
 class View
 {
-    private ?View $layout                  = null;
-    private array $variables               = [];
-    private ?string $template              = null;
-    private const array DEFAULT_VIEW_PATHS = ['views', 'app/views'];
+    private ?View $layout     = null;
+    private array $variables  = [];
+    private ?string $template = null;
+    // src/views is last on purpose. naf/framework lists it first in its own
+    // VIEW_PATHS, but that constant resolves a plugin's views; this one
+    // resolves the application's. Putting it in front would change which
+    // template wins for a project that happens to have two of these
+    // directories, and a patch release is the wrong place to flip that.
+    private const array DEFAULT_VIEW_PATHS = ['views', 'app/views', 'src/views'];
 
     /**
      * @param string $template

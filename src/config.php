@@ -7,6 +7,7 @@ return [
         'paths' => [
             'views',
             'app/views',
+            'src/views',
         ],
     ],
 ];
