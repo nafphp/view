@@ -79,6 +79,43 @@ class ViewTest extends NafTestCase
         });
     }
 
+    public function testDefaultPathsIncludeTheSrcLayout()
+    {
+        // An application keeps its code in app/ or in src/. naf/framework accepts
+        // either for a plugin's views and for plugins.php; an application laid out
+        // the second way had nowhere conventional for its own until now.
+        // An empty config falls back to DEFAULT_VIEW_PATHS, which is what is at stake.
+        $this->withViewConfig([], function () {
+            $view = new View();
+            $view->setTemplate('test_src_layout');
+            $this->assertSame('src layout view', trim($view->render()));
+        });
+    }
+
+    public function testTheShippedConfigIncludesTheSrcLayout()
+    {
+        $shipped = require __DIR__ . '/../../src/config.php';
+
+        $this->withViewConfig($shipped, function () {
+            $view = new View();
+            $view->setTemplate('test_src_layout');
+            $this->assertSame('src layout view', trim($view->render()));
+        });
+    }
+
+    public function testTheOlderLayoutWinsWhenAProjectHasBoth()
+    {
+        // The same template name exists in views/ and in src/views/. src/views is
+        // listed last, so a project holding both resolves exactly as it did before
+        // this was added -- which is the whole reason it was appended rather than
+        // put in front.
+        $this->withViewConfig([], function () {
+            $view = new View();
+            $view->setTemplate('test_layout_precedence');
+            $this->assertSame('older layout wins', trim($view->render()));
+        });
+    }
+
     public function testMissingOpenedBlockInView()
     {
         $this->expectException(Exception::class);
