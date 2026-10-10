@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Naf\View\Core;
 
+use function Naf\log;
 use function Naf\View\s;
 
 class Asset
@@ -21,32 +22,43 @@ class Asset
     ];
 
     /**
-     * @param string $path
-     * @param string $mode
+     * Collect a stylesheet or script for the layout to render
      *
-     * @return void
+     * The type comes from the extension of the URL path, so a cache-busting
+     * query string (`/css/app.css?v=2`) or a fragment does not hide it. `.mjs`
+     * files are ES modules and always render as `type="module"`. A path whose
+     * type cannot be told is not collected; the application log says so instead
+     * of the asset disappearing without a trace.
+     *
+     * @param string $path URL of the asset, as it should appear in the tag
+     * @param string $mode `classic` or `module` for JavaScript; anything else means `classic`
      */
     public function add(string $path, string $mode = 'classic'): void
     {
-        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        $urlPath   = parse_url($path, PHP_URL_PATH);
+        $extension = strtolower(pathinfo(is_string($urlPath) ? $urlPath : '', PATHINFO_EXTENSION));
 
-        if ($ext === 'css') {
+        if ($extension === 'css') {
             $this->assets['css'][] = $path;
-        } elseif ($ext === 'js') {
-            $mode = strtolower($mode);
-            if (!in_array($mode, ['classic', 'module'])) {
+
+            return;
+        }
+
+        if ($extension === 'js' || $extension === 'mjs') {
+            $mode = $extension === 'mjs' ? 'module' : strtolower($mode);
+
+            if (!in_array($mode, ['classic', 'module'], true)) {
                 $mode = 'classic';
             }
+
             $this->assets['js'][$mode][] = $path;
+
+            return;
         }
+
+        log()->warning('Asset not collected, its type is unknown: {path}', ['path' => $path]);
     }
 
-    /**
-     * @param string $type
-     * @param string $mode
-     *
-     * @return array
-     */
     public function list(string $type, string $mode = 'classic'): array
     {
         if ($type === 'js') {
