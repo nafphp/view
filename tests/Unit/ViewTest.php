@@ -12,7 +12,6 @@ use RuntimeException;
 use Tests\NafTestCase;
 
 use function Naf\app;
-use function Naf\guard;
 use function Naf\View\view;
 
 class ViewTest extends NafTestCase
@@ -128,15 +127,58 @@ class ViewTest extends NafTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $view = new View();
-        guard()->register('safePath', fn($path) => throw new InvalidArgumentException('test'));
         $view->setTemplate('../../../../etc/passwd');
         $view->render();
     }
 
     public function testHelperFunction()
     {
-        guard()->register('safePath', fn($path) => $path);
         $this->assertIsString(view('test'));
+    }
+
+    public function testTemplateFailureDiscardsNestedBuffersAndPreservesCallerOutput(): void
+    {
+        $before = ob_get_level();
+        ob_start();
+        echo 'caller-output';
+
+        try {
+            $view = (new View())->setTemplate('test_failure')->setVariables(['bufferLevel' => -1]);
+            $view->render();
+            self::fail('Expected the template to throw.');
+        } catch (RuntimeException $exception) {
+            self::assertSame('template-secret', $exception->getMessage());
+            self::assertSame($before + 1, ob_get_level());
+            self::assertSame('caller-output', ob_get_contents());
+        } finally {
+            while (ob_get_level() > $before) {
+                ob_end_clean();
+            }
+        }
+        self::assertSame('content', (new View())->setTemplate('test')->render());
+    }
+
+    public function testLayoutFailureAlsoDiscardsOutput(): void
+    {
+        $before = ob_get_level();
+
+        try {
+            (new View())->setTemplate('test')->setLayout('test_failure')->render();
+            self::fail('Expected the layout to throw.');
+        } catch (RuntimeException $exception) {
+            self::assertSame('template-secret', $exception->getMessage());
+            self::assertSame($before, ob_get_level());
+        }
+    }
+
+    public function testEscapingIsExplicitAndUsesTheRealFrameworkGuard(): void
+    {
+        $input   = '<script>alert("x")</script>\'&' . "\xff";
+        $escaped = '&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;&#039;&amp;' . "\u{fffd}";
+        self::assertSame($escaped, \Naf\View\s($input));
+        self::assertSame('', \Naf\View\s(null));
+        self::assertSame(['value' => $escaped, 'empty' => ''], \Naf\View\s(['value' => $input, 'empty' => null]));
+        self::assertSame($escaped . '|' . $input, view('test_escaping', ['value' => $input]));
     }
 
     private function withViewConfig(array $settings, callable $callback): void

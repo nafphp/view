@@ -4,26 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e405e58757f82314c6437be7392201d",
+    "content-hash": "37fcc2dfe39da04248f54296c173d42a",
     "packages": [
         {
             "name": "naf/framework",
-            "version": "v0.2.1",
+            "version": "v0.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nafphp/framework.git",
-                "reference": "415db594f2ddf7aea5e5f571cb1bbc859568029c"
+                "reference": "c61a7f9d95577596f5e6cc99c0188ee999716a9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nafphp/framework/zipball/415db594f2ddf7aea5e5f571cb1bbc859568029c",
-                "reference": "415db594f2ddf7aea5e5f571cb1bbc859568029c",
+                "url": "https://api.github.com/repos/nafphp/framework/zipball/c61a7f9d95577596f5e6cc99c0188ee999716a9a",
+                "reference": "c61a7f9d95577596f5e6cc99c0188ee999716a9a",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "ext-pdo": "*",
-                "nyholm/psr7": "^1.8",
+                "nyholm/psr7": "^1.8.2",
                 "nyholm/psr7-server": "^1.1",
                 "php": ">=8.3",
                 "psr/container": "^2.0",
@@ -32,6 +31,7 @@
                 "psr/log": "^3.0"
             },
             "require-dev": {
+                "phpstan/phpstan": "^2.1",
                 "phpunit/php-code-coverage": "^12.1",
                 "phpunit/phpunit": "^12.1"
             },
@@ -58,9 +58,9 @@
             "description": "NAF - the ultra-light, functional PHP framework for fast microservices and APIs.",
             "support": {
                 "issues": "https://github.com/nafphp/framework/issues",
-                "source": "https://github.com/nafphp/framework/tree/v0.2.1"
+                "source": "https://github.com/nafphp/framework/tree/v0.2.13"
             },
-            "time": "2026-09-13T13:44:52+00:00"
+            "time": "2026-10-24T10:44:00+00:00"
         },
         {
             "name": "nyholm/psr7",

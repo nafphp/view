@@ -80,10 +80,18 @@ class View
      */
     public function render(): string
     {
+        $bufferLevel = ob_get_level();
         ob_start();
-        extract($this->variables);
-        include $this->template;
-        $content = ob_get_clean();
+
+        try {
+            extract($this->variables, EXTR_SKIP);
+            include $this->template;
+            $content = (string) ob_get_clean();
+        } finally {
+            while (ob_get_level() > $bufferLevel) {
+                ob_end_clean();
+            }
+        }
 
         if ($this->layout instanceof View) {
             return $this->layout->setVariables($this->variables)->render();
