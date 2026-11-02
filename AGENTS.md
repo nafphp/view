@@ -40,7 +40,9 @@ The template `app/views/greeting.phtml`:
 
 `render()` returns a PSR-7 response; `view()` returns a string. Escape untrusted HTML text and
 quoted attribute values with `s()`. It is not a JavaScript/CSS/URL sanitizer. Rendering uses
-normal PHP; variables are not automatically escaped.
+normal PHP; variables are not automatically escaped. Framework 0.2.9+ is required for
+nullable values, invalid UTF-8 substitution and CLI guards. Rendering failures discard
+the renderer's buffers and propagate the exception.
 
 ## Change it here
 

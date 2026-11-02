@@ -12,6 +12,7 @@ use function Naf\app;
 use function Naf\guard;
 use function Naf\response;
 
+/** Escape HTML text and quoted attributes; arrays are flat, null becomes an empty string. */
 function s(string|array|null $value): string|array|null
 {
     return guard()->safeOutput($value);
